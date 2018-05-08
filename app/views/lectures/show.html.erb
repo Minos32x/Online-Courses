@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<div>
+<strong>Course Name</strong>
+<%=link_to @lecture.course.title , @lecture.course %>
+</div>
+<br>
+<div>
+  <strong>Content:</strong>
+  <%= @lecture.content %>
+
+  <%if user_session && current_user.id === @lecture.user_id%>
+<%= link_to 'Edit Lecture', edit_lecture_path(@lecture) %> 
+<%end%>
+</div>
+
+<br>
+<div>
+  <strong>Attachment:</strong>
+  <%= @lecture.attachment %>
+</div>
+
+<br>
+
+<%= link_to 'Add New Comment' ,new_comment_path %>
+
+<br>
+<br>
+
+<div>
+<strong>Comments: </strong>
+<br><br>
+<% @lecture.comments.each do |comment| %>
+  <li> <%= comment.body %>
+  <%if user_session && current_user.id === comment.user_id%>
+| <%= link_to 'Edit', edit_comment_path(comment) %>
+       | <%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
+       <%end%>
+         </li>
+<% end %>
+
+
+</div>
+
+
+
+<br>
+
+<%# <%= link_to 'Back', lectures_path %>
