@@ -1,36 +1,36 @@
 <%= form_with(model: lecture, local: true) do |form| %>
   <% if lecture.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(lecture.errors.count, "error") %> prohibited this lecture from being saved:</h2>
+     <div class="text-danger"> <h2><%= pluralize(lecture.errors.count, "error") %> prohibited this lecture from being saved:</h2></div>
 
       <ul>
       <% lecture.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+        <li><div class="text-danger" style="font-size:15px"> <%= message  %></div></li>
       <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
-    <%= form.label :content %>
-    <%= form.text_field :content, id: :lecture_content %>
+    <%= form.label " Content: ", :style =>'font-size:25px' %>
+    <%= form.cktext_area :content, id: :lecture_content  %>
   </div>
-
+<br>
   <div class="field">
-    <%= form.label :attachment %>
+    <%= form.label "Attachment:" , :style =>'font-size:25px'%>
     <%= form.file_field :attachment, id: :lecture_attachment %>
   </div>
-
+<br>
   <div class="field">
-    <%= form.label :course_id %>
+    <%= form.label :course_id, :style =>'font-size:25px' %>
     <%= form.collection_select :course_id, Course.order(:title), :id ,:title %>
   </div>
-
+<br>
   <div class="field">
      <%= form.text_field :user_id, id: :user_id  ,value:current_user.id,hidden:true %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%=  form.submit :class =>'btn btn-success' %> 
   </div>
 <% end %>

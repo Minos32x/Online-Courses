@@ -12,6 +12,11 @@ ActiveAdmin.register User do
     actions
   end
 
+  filter :name
+  filter :email
+  filter :gender
+  filter :date_of_birth
+
   show do
     attributes_table do
       row :name

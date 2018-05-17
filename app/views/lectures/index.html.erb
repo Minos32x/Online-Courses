@@ -2,8 +2,10 @@
 
 <h1>Lectures</h1>
 
-<table>
-  <thead>
+<%= link_to 'New Lecture', new_lecture_path ,:class=>'btn btn-success' , :style =>'font-size:15px' %>
+
+<table class="table table-striped ">
+  <thead class="thead-dark">
     <tr>
       <th>Content</th>
       <th>Attachment</th>
@@ -15,13 +17,13 @@
   <tbody>
     <% @lectures.each do |lecture| %>
       <tr>
-        <td><%= lecture.content %></td>
+        <td><%=link_to (raw lecture.content),lecture %></td>
         <td><%= lecture.attachment %></td>
-         <td><%= lecture.user_id %></td>
-        <td><%= link_to 'Show', lecture %></td>
+         <td><%= lecture.course.title %></td> 
+        <td><%= link_to 'Show', lecture ,:class=>'btn btn-primary' %></td>
         <%if user_session && current_user.id === lecture.user_id%>
-        <td><%= link_to 'Edit', edit_lecture_path(lecture) %></td>
-        <td><%= link_to 'Destroy', lecture, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_lecture_path(lecture),:class=>'btn btn-warning' %></td>
+        <td><%= link_to 'Destroy', lecture, method: :delete, data: { confirm: 'Are you sure?' },:class=>'btn btn-danger' %></td>
         <%end%>
       </tr>
     <% end %>
@@ -30,4 +32,4 @@
 
 <br>
 
-<%= link_to 'New Lecture', new_lecture_path %>
+

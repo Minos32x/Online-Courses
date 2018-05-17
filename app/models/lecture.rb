@@ -6,7 +6,9 @@ class Lecture < ApplicationRecord
 
     belongs_to :user
     belongs_to :course
-    has_many :comments, dependent: :destroy
+    acts_as_votable
+    acts_as_commentable
+    
 
     mount_uploader :attachment, AttachmentUploader
     

@@ -1,49 +1,78 @@
 <p id="notice"><%= notice %></p>
 
 <div>
-<strong>Course Name</strong>
-<%=link_to @lecture.course.title , @lecture.course %>
+<strong style="font-size:25px">Course Name: <%=link_to @lecture.course.title , @lecture.course %> </strong>
 </div>
 <br>
 <div>
-  <strong>Content:</strong>
-  <%= @lecture.content %>
+  <strong style="font-size:25px">Content:</strong>
+  <span style="font-size:15px"><%=raw  @lecture.content %> </span>
 
   <%if user_session && current_user.id === @lecture.user_id%>
-<%= link_to 'Edit Lecture', edit_lecture_path(@lecture) %> 
+ <%= link_to 'Edit Lecture', edit_lecture_path(@lecture), :class =>'btn btn-warning' , :style => 'font-size:20px' %>
 <%end%>
 </div>
 
 <br>
 <div>
-  <strong>Attachment:</strong>
-  <%= @lecture.attachment %>
+  <strong style="font-size:25px">Attachment:   <span style='font-size:20px; color:green'><%=@lecture.attachment_in_database%> </span</strong><br>
+  <span style="font-size:20px"> <%=  link_to 'Download Attachment', @lecture.attachment_url %></span>
+   
 </div>
+<br>
+<hr>
 
+
+<strong style="font-size:20px; color:red" >Spam Reports</strong>
+<br>
+<strong style="font-size:20px; color:orange">Spams Number : <%=@lecture.get_downvotes.size %></strong>
 <br>
 
-<%= link_to 'Add New Comment' ,new_comment_path %>
+
+
+
+
+<%= link_to 'Report Abuse',spam_lecture_path , :method=>:get , :class=>'btn btn-danger' , :style=>'font-size:15px' %>
+<br>
+<hr>
+
+<%= form_tag vote_lecture_path, :method => :get do %>
+<strong style="font-size:20px">Likes Count: <%=@lecture.get_likes.size %></strong>   <br>
+<% if user_session %>
+<% if  !current_user.liked? @lecture %>
+    <%= submit_tag "Like", class: "btn btn-success"  , :style => 'font-size:20px' %>   
+    <% else%>
+    <%= submit_tag 'Dislike', class: "btn btn-danger"  , :style => 'font-size:20px'%> 
+    <%end%>
+<% end %>
+<%end%>
 
 <br>
-<br>
+<hr>
 
 <div>
-<strong>Comments: </strong>
+<strong style="font-size:20px">Comments: </strong>
 <br><br>
-<% @lecture.comments.each do |comment| %>
-  <li> <%= comment.body %>
-  <%if user_session && current_user.id === comment.user_id%>
-| <%= link_to 'Edit', edit_comment_path(comment) %>
-       | <%= link_to 'Delete', comment, method: :delete, data: { confirm: 'Are you sure?' } %>
-       <%end%>
-         </li>
+
+
+<% @lecture.comment_threads.each do |comment| %>
+  <li> <span style="font-size:15px; color:orange">  User: </span> <span style="font-size:15px"><%= comment.user.name %></span> </li>  
+    <span style="font-size:15px; color:blue">Comment :</span> <span style="font-size:15px"><%= comment.body %></span>
+    <%if user_session && current_user.id === comment.user_id%>
+    <%=link_to 'Delete', comment_delete_lecture_path(:comment=>comment.id,:lecture=>@lecture.id), :method=> :delete , data: { confirm: 'Are you sure?' } , :class =>'btn btn-danger'%>
+    <%end%>
 <% end %>
+
+<% if user_session %>
+<%= form_tag comment_lecture_path, :method => :post do %>
+
+    <%= text_field_tag "comment"  %>
+
+    <%= submit_tag "Submit" , :class =>'btn btn-success'%>
+  
+<% end %>
+<%end%>
 
 
 </div>
 
-
-
-<br>
-
-<%# <%= link_to 'Back', lectures_path %>
