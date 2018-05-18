@@ -31,6 +31,7 @@ ActiveAdmin.register Lecture do
       f.input :course
       f.input :content, as: :ckeditor
       f.input :attachment
+      f.input :comment_threads
     end
     f.actions
   end
