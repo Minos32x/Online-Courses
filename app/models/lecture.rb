@@ -10,6 +10,6 @@ class Lecture < ApplicationRecord
     acts_as_commentable
     
 
-    mount_uploader :attachment, AttachmentUploader
+    mount_uploaders :attachment, AttachmentUploader
     
 end

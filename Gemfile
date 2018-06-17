@@ -30,14 +30,7 @@ gem 'jquery-rails'
 gem "paperclip", "~> 6.0.0"
 gem 'ckeditor'
 gem "cancan"
-
-
-
-
-
-
-
-
+gem 'jquery-rails'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
